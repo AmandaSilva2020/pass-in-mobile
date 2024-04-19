@@ -3,6 +3,9 @@ import { useState } from "react";
 import { StatusBar, View, Text, ScrollView, TouchableOpacity, Alert, Modal } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { Redirect } from "expo-router";
+
+import { useBadgeStorage } from "@/storage/badge-storage";
 
 import { colors } from "@/styles/colors";
 
@@ -14,6 +17,8 @@ import { QRCode } from "@/components/qrcode";
 export default function Ticket(){
     const [image, setImage] = useState("");
     const [expandQRCode, setExpandQRCode] = useState(false);
+
+    const badgeStorage = useBadgeStorage()
 
     async function handleSelectImage(){
         try{
@@ -31,6 +36,10 @@ export default function Ticket(){
             console.log(error)
             Alert.alert("Foto", "Não foi possível selecionar a imagem")
         }
+    }
+
+    if(!badgeStorage.data?.checkInURL){
+        return <Redirect href="/" />
     }
 
     return(
@@ -65,7 +74,11 @@ export default function Ticket(){
 
                 <Button title="Compartilhar"/>
 
-                <TouchableOpacity activeOpacity={0.7} className="mt-10">
+                <TouchableOpacity 
+                    activeOpacity={0.7} 
+                    className="mt-10" 
+                    onPress={() => badgeStorage.remove()}
+                >
                     <Text className="text-base text-white font-bold text-center">Remover Ingresso</Text>
                 </TouchableOpacity>
             </ScrollView>
