@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 import { StatusBar, View, Text, ScrollView, TouchableOpacity, Alert, Modal, Share } from "react-native";
+import { MotiView } from "moti"
+
 import { FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { Redirect } from "expo-router";
@@ -69,12 +71,26 @@ export default function Ticket(){
                     onExpandQRCode={() => setExpandQRCode(true)}
                 />
 
-                <FontAwesome 
-                    name="angle-double-down" 
-                    size={24} 
-                    color={colors.gray[300]} 
-                    className="self-center my-6"
-                />
+                <MotiView
+                    from={{
+                        translateY: 0,
+                    }}
+                    animate={{
+                        translateY: 10,
+                    }}
+                    transition={{
+                        loop: true,
+                        type: "timing",
+                        duration: 700
+                    }}
+                >
+                    <FontAwesome 
+                        name="angle-double-down" 
+                        size={24} 
+                        color={colors.gray[300]} 
+                        className="self-center my-6"
+                    />
+                </MotiView>
 
                 <Text className="text-white font-bold text-2xl mt-4">
                     Compartilhar credencial
