@@ -15,7 +15,6 @@ import { Button } from "@/components/button";
 import { QRCode } from "@/components/qrcode";
 
 export default function Ticket(){
-    const [image, setImage] = useState("");
     const [expandQRCode, setExpandQRCode] = useState(false);
 
     const badgeStorage = useBadgeStorage()
@@ -29,7 +28,7 @@ export default function Ticket(){
             })
 
             if(result.assets){
-                setImage(result.assets[0].uri)
+                badgeStorage.updateAvatar(result.assets[0].uri)
             }
 
         }catch(error){
@@ -52,7 +51,6 @@ export default function Ticket(){
                 showsVerticalScrollIndicator={false}
             >
                 <Credential 
-                    image={image} 
                     data={badgeStorage.data}
                     onChangeAvatar={handleSelectImage} 
                     onExpandQRCode={() => setExpandQRCode(true)}

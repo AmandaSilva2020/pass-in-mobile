@@ -14,6 +14,7 @@ export type BadgeStorage = {
 type StateProps = {
     data: BadgeStorage | null,
     save: (data: BadgeStorage) => void,
+    updateAvatar: (uri: string) => void,
     remove: () => void
 }
 
@@ -23,6 +24,9 @@ export const useBadgeStorage = create(
     data: null,
 
     save: (data: BadgeStorage) => set(() => ({ data })),
+    updateAvatar: (uri: string) => set((state) => ({
+        data: state.data ? { ...state.data, image: uri} : state.data
+    })),
     remove: () => set(() => ({ data: null })),
 }), {
    name: "nlw-unite:badge",
